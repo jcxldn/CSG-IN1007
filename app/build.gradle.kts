@@ -34,7 +34,7 @@ java {
 
 application {
     // Define the main class for the application.
-    mainClass = "in1007.App"
+    mainClass = "net.jcxldn.csg.in1007.App"
 }
 
 tasks.named<Test>("test") {
