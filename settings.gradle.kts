@@ -11,4 +11,10 @@ plugins {
 }
 
 rootProject.name = "IN1007"
-include("app")
+include("weeks:w3")
+include("weeks:w3:ex1")
+include("weeks:w3:ex2")
+include("weeks:w3:ex5")
+include("weeks:w3:ex6")
+include("weeks:w3:ex7")
+include("weeks:w3:lecture")
