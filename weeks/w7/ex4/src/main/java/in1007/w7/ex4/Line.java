@@ -54,4 +54,19 @@ public class Line implements Container {
         });
         return sb.toString();
     }
+
+    public Line reverse() {
+        Line line = new Line(this.squares.length);
+
+        forEach((currentPos, previousPos) -> {
+            Point1D point = (Point1D) currentPos;
+
+            Point1D reversedPoint = new Point1D(this.squares.length - 1 - point.getPos());
+
+            System.out.println(reversedPoint.getPos());
+            line.setPosition(reversedPoint, this.getPosition(point));
+        });
+
+        return line;
+    }
 }

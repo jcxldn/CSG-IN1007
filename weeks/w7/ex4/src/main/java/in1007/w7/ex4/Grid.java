@@ -4,6 +4,7 @@ import in1007.w7.ex4.container.Container;
 import in1007.w7.ex4.container.ForEachExecutor;
 import in1007.w7.ex4.position.Axes;
 import in1007.w7.ex4.position.Point;
+import in1007.w7.ex4.position.Point1D;
 import in1007.w7.ex4.position.Point2D;
 
 public class Grid implements Container {
@@ -64,5 +65,41 @@ public class Grid implements Container {
             sb.append(this.getPosition(currentPos));
         });
         return sb.toString();
+    }
+
+    // get row
+    public Line getY(int y) {
+        Line line = new Line(this.sizeX);
+
+        line.forEach((currentPos, previousPos) -> {
+            // Get the point along the line
+            Point1D point = (Point1D) currentPos;
+
+            // Use the point1d along the line (x) and the given y to fetch the square
+            Point2D gridPoint = new Point2D(point.getPos(), y);
+            Square square = this.getPosition(gridPoint);
+
+            line.setPosition(point, square);
+        });
+
+        return line;
+    }
+
+    // get column
+    public Line getX(int x) {
+        Line line = new Line(this.sizeY);
+
+        line.forEach((currentPos, previousPos) -> {
+            // Get the point along the line
+            Point1D point = (Point1D) currentPos;
+
+            // Use the point1d along the line (y) and the given x to fetch the square
+            Point2D gridPoint = new Point2D(x, point.getPos());
+            Square square = this.getPosition(gridPoint);
+
+            line.setPosition(point, square);
+        });
+
+        return line;
     }
 }
