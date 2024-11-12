@@ -10,9 +10,9 @@ public class Point1D extends Point {
     }
 
     @Override
-    public boolean equals(Class<? extends Point> otherPoint) {
-        if (otherPoint.isInstance(Point1D.class)) {
-            Point1D other = Point1D.class.cast(otherPoint);
+    public boolean equals(Point otherPoint) {
+        if (otherPoint instanceof Point1D) {
+            Point1D other = (Point1D) otherPoint;
             return this.getPos() == other.getPos();
         } else {
             return false;

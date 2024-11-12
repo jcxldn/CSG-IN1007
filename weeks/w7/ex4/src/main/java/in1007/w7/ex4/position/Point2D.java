@@ -12,13 +12,28 @@ public class Point2D extends Point {
     }
 
     @Override
-    public boolean equals(Class<? extends Point> otherPoint) {
-        if (otherPoint.isInstance(Point2D.class)) {
-            Point2D other = Point2D.class.cast(otherPoint);
+    public boolean equals(Point otherPoint) {
+        if (otherPoint instanceof Point2D) {
+            Point2D other = (Point2D) otherPoint;
             return (this.getX() == other.getX() &&
                     this.getY() == other.getY());
         } else {
             return false;
         }
+    }
+
+    public boolean equals(Axes a, Point otherPoint) {
+        if (otherPoint instanceof Point2D) {
+            Point2D other = (Point2D) otherPoint;
+
+            switch (a) {
+                case X:
+                    return this.getX() == other.getX();
+                case Y:
+                    return this.getY() == other.getY();
+            }
+        }
+
+        return false;
     }
 }
