@@ -4,8 +4,7 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("HI");
 
-        Line line = new Line(5);
-
-        System.out.println(line);
+        Grid grid = new Grid(5, 10);
+        System.out.println(grid);
     }
 }
