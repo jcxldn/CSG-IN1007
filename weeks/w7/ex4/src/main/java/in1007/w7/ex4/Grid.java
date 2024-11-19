@@ -1,5 +1,7 @@
 package in1007.w7.ex4;
 
+import java.util.ArrayList;
+
 import in1007.w7.ex4.container.Container;
 import in1007.w7.ex4.container.ForEachExecutor;
 import in1007.w7.ex4.position.Axes;
@@ -101,5 +103,104 @@ public class Grid implements Container {
         });
 
         return line;
+    }
+
+    public void setY(Line line, int x) {
+        line.forEach((currentPoint, previousPoint) -> {
+            Point1D currentPoint1D = (Point1D) currentPoint;
+
+            Point2D destinationPoint = new Point2D(x, currentPoint1D.getPos());
+            this.setPosition(destinationPoint, line.getPosition(currentPoint));
+        });
+    }
+
+    public void setX(Line line, int y) {
+        line.forEach((currentPoint, previousPoint) -> {
+            Point1D currentPoint1D = (Point1D) currentPoint;
+
+            Point2D destinationPoint = new Point2D(currentPoint1D.getPos(), y);
+            this.setPosition(destinationPoint, line.getPosition(currentPoint));
+        });
+    }
+
+    public void tick(Direction d) {
+        switch (d) {
+            case UP:
+                tickUp();
+                break;
+            case DOWN:
+                tickDown();
+                break;
+            case LEFT:
+                tickLeft();
+                break;
+            case RIGHT:
+                tickRight();
+                break;
+
+        }
+
+        // Finally, add number 2 to random square (that previously contained 0)
+        randomlyAddTwo();
+    }
+
+    public void tickLeft() {
+        // Update all rows in grid
+        for (int y = 0; y < this.sizeY; y++) {
+            Line line = this.getY(y);
+            line.tick();
+            this.setY(line, y);
+        }
+    }
+
+    public void tickRight() {
+        // Reverse, update, then reverse all rows in grid
+        for (int y = 0; y < this.sizeY; y++) {
+            Line line = this.getY(y);
+            line = line.reverse();
+            line.tick();
+            line = line.reverse();
+            this.setY(line, y);
+        }
+    }
+
+    public void tickUp() {
+        // Update all columns in grid (top to bottom)
+        for (int x = 0; x < this.sizeX; x++) {
+            Line line = this.getX(x);
+            line.tick();
+            this.setY(line, x);
+        }
+    }
+
+    public void tickDown() {
+        // Reverse, update, then reverse all columns in grid (top to bottom)
+        for (int x = 0; x < this.sizeX; x++) {
+            Line line = this.getX(x);
+            line = line.reverse();
+            line.tick();
+            line = line.reverse();
+            this.setY(line, x);
+        }
+    }
+
+    public void randomlyAddTwo() {
+        ArrayList<Point2D> emptyPoints = new ArrayList<Point2D>();
+
+        forEach((currentPoint, previousPoint) -> {
+            Point2D currentPoint2D = (Point2D) currentPoint;
+            if (getPosition(currentPoint2D).getValue() == 0) {
+                emptyPoints.add(currentPoint2D);
+            }
+        });
+
+        // ArrayList populated, get a random index from the arraylist
+        // based on moodle notes
+        int randomIndex = (int) (Math.random() * emptyPoints.size() + 1);
+
+        Square square = new Square();
+        square.setValue(2);
+
+        setPosition(emptyPoints.get(randomIndex), square);
     }
 }

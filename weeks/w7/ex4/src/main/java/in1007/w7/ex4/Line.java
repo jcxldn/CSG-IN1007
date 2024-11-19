@@ -69,4 +69,50 @@ public class Line implements Container {
 
         return line;
     }
+
+    public void tick() {
+        // Common
+        forEach((currentPos, previousPos) -> {
+            // If we are at the first position, skip this one since we want to compare n and
+            // n-1.
+            if (currentPos.equals(previousPos))
+                return;
+
+            // Get squares
+            Square current = this.getPosition(currentPos);
+            Square previous = this.getPosition(previousPos);
+
+            // Check to see if we have two identical numbers, ignoring if either is 0
+            if (current == previous && current.getValue() != 0) {
+                System.out.println("MATCH");
+
+                // Add the two elements, placing the sum in the first square and zero in the
+                // last.
+                current.merge(previous); // update current to current+previous
+                previous.reset(); // reset previous value to 0
+
+                // Update squares
+                this.setPosition(currentPos, current);
+                this.setPosition(previousPos, previous);
+            }
+        });
+
+        // Shift all non-zero elements to the right
+
+        forEach((currentPos, previousPos) -> {
+            if (currentPos.equals(previousPos))
+                return;
+
+            // We are at position > 0
+
+            // Check if previous position is 0
+            Square previous = this.getPosition(previousPos);
+
+            if (previous.getValue() == 0) {
+                // Swap previous and current
+                this.setPosition(previousPos, this.getPosition(currentPos));
+                this.setPosition(currentPos, previous);
+            }
+        });
+    }
 }

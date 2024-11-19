@@ -6,5 +6,9 @@ public class Main {
 
         Grid grid = new Grid(5, 10);
         System.out.println(grid);
+        grid.tick(Direction.DOWN);
+        System.out.println("\r\n");
+        System.out.println(grid);
+
     }
 }
