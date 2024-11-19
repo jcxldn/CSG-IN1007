@@ -2,6 +2,7 @@ package in1007.w7.ex4;
 
 import java.util.ArrayList;
 import java.util.Objects;
+import java.util.Random;
 
 import in1007.w7.ex4.container.Container;
 import in1007.w7.ex4.container.ForEachExecutor;
@@ -232,9 +233,8 @@ public class Grid implements Container, Cloneable {
             }
         });
 
-        // ArrayList populated, get a random index from the arraylist
-        // based on moodle notes
-        int randomIndex = (int) (Math.random() * emptyPoints.size() + 1);
+        // Get a random number between 0 and size-1 (upper bound is exclusive)
+        int randomIndex = (new Random()).nextInt(emptyPoints.size());
 
         Square square = new Square();
         square.setValue(2);
