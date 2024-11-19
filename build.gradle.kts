@@ -31,7 +31,7 @@ configure(subprojects.filter { projectRegex.containsMatchIn(it.name) }) {
 
     val parentProj = getParents()
 
-    println("Discovered project '${getParents()}'")
+    //println("Discovered project '${getParents()}'")
 
     repositories {
 	    mavenCentral()
