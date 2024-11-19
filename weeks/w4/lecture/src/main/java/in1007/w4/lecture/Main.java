@@ -4,9 +4,20 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        int[] array = { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10 };
-        for (int item : array) {
-            System.out.println(item);
-        }
+        Scanner s = new Scanner(System.in);
+
+        System.out.print("Age: ");
+        int age = s.nextInt();
+
+        System.out.println(age >= 18 ? "Adult" : "Underage");
+        /**
+         * Equal to:
+         * 
+         * if (age >= 18) {
+         * System.out.println("Adult");
+         * } else {
+         * System.out.println("Underage");
+         * }
+         */
     }
 }
