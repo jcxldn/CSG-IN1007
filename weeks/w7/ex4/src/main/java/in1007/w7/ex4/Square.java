@@ -3,8 +3,17 @@ package in1007.w7.ex4;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Square {
+public class Square implements Cloneable {
     private @Getter @Setter int value = 0;
+
+    public Object clone() throws CloneNotSupportedException {
+        // Shallow copy is fine since we do not have
+        // instances of classes as parameters (only primitives like int)
+        Square cloned = (Square) super.clone();
+
+        // Return the cloned object
+        return cloned;
+    }
 
     public String toString() {
         return String.valueOf(this.value);
