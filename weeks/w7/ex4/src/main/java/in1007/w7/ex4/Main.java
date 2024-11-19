@@ -16,8 +16,8 @@ public class Main {
         while (grid.isGameActive()) {
             // Clear screen
             // https://www.javatpoint.com/how-to-clear-screen-in-java#Platform-Specific-Command
-            // System.out.print("\033[H\033[2J");
-            // System.out.flush();
+            System.out.print("\033[H\033[2J");
+            System.out.flush();
 
             // Display grid (Grid has a toString method that returns a String array
             // representation so calling println on the instance will work)

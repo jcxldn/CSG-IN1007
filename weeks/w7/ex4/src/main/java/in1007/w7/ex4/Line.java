@@ -1,5 +1,6 @@
 package in1007.w7.ex4;
 
+import in1007.w7.ex4.BreakableForEach.BreakableForEachExecutor;
 import in1007.w7.ex4.container.Container;
 import in1007.w7.ex4.container.ForEachExecutor;
 import in1007.w7.ex4.position.Point;
@@ -27,6 +28,24 @@ public class Line implements Container {
             previousPos = currentPos;
         }
 
+    }
+
+    public void breakableForEach(BreakableForEachExecutor ex) {
+        BreakableForEach bfe = new BreakableForEach();
+
+        while (!bfe.isWillBreak()) {
+
+            Point1D previousPos = new Point1D(0);
+
+            for (int index = 0; index < squares.length; index++) {
+                bfe.setStartingNewIteration(index == 0);
+
+                Point1D currentPos = new Point1D(index);
+                ex.execute(bfe, currentPos, previousPos);
+                previousPos = currentPos;
+            }
+
+        }
     }
 
     @Override
@@ -83,7 +102,7 @@ public class Line implements Container {
             Square previous = this.getPosition(previousPos);
 
             // Check to see if we have two identical numbers, ignoring if either is 0
-            if (current == previous && current.getValue() != 0) {
+            if (current.equals(previous) && current.getValue() != 0) {
                 System.out.println("MATCH");
 
                 // Add the two elements, placing the sum in the first square and zero in the
@@ -99,20 +118,50 @@ public class Line implements Container {
 
         // Shift all non-zero elements to the right
 
-        forEach((currentPos, previousPos) -> {
-            if (currentPos.equals(previousPos))
+        breakableForEach((bfe, currentPos, previousPos) -> {
+
+            // Check if we should break, if so do nothing
+            if (bfe.isWillBreak()) {
                 return;
+            }
+
+            // Check if we are starting a new iteration
+            if (bfe.isStartingNewIteration()) {
+
+                // Check if we should break (hasSwapped == false)
+                if (!bfe.isHasSwapped()) {
+                    // No swaps made since last iteration, end here.
+                    bfe.setWillBreak(true);
+                    return;
+                } else {
+                    // (hasSwapped == true) we swapped last iteration, continue
+
+                    // reset hasSwapped for this new iteration
+                    bfe.setHasSwapped(false);
+                }
+
+                // Reset flag
+                bfe.setStartingNewIteration(false);
+            }
+
+            // Check if we are comparing the first object against itself
+            if (currentPos.equals(previousPos))
+                return; // Skip this object since we compare n against n-1
 
             // We are at position > 0
 
             // Check if previous position is 0
             Square previous = this.getPosition(previousPos);
+            Square current = this.getPosition(currentPos);
 
-            if (previous.getValue() == 0) {
+            if (previous.getValue() == 0 && current.getValue() != 0) {
                 // Swap previous and current
-                this.setPosition(previousPos, this.getPosition(currentPos));
+                this.setPosition(previousPos, current);
                 this.setPosition(currentPos, previous);
+
+                bfe.setHasSwapped(true);
             }
         });
+        System.out.println("\r\n\r\n");
     }
 }
