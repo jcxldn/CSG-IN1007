@@ -9,7 +9,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
 
-        Grid grid = new Grid(5, 10);
+        Grid grid = new Grid(4, 4); // "real" 2048 is 4x4, we support n1 x n2 though...
 
         Pattern inputKeys = Pattern.compile("[wasd]");
 

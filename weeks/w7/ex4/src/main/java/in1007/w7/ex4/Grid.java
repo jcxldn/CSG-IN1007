@@ -93,6 +93,7 @@ public class Grid implements Container, Cloneable {
                 sb.append("\r\n");
             }
             sb.append(this.getPosition(currentPos));
+            sb.append("\t");
         });
         return sb.toString();
     }
