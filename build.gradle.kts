@@ -1,10 +1,12 @@
 
 plugins {
     id("application")
-    id("java")
 }
 
-subprojects {
+
+// only configure projects with ex[0-9+] or lecture in the name
+var projectRegex = Regex("ex\\d+|lecture")
+configure(subprojects.filter { projectRegex.containsMatchIn(it.name) }) {
     apply(plugin = "application")
     apply(plugin = "java")
 
@@ -24,10 +26,12 @@ subprojects {
             proj = proj.getParent()
         } while (proj != null)
 
-        return res.lowercase()
+        return res.lowercase().replace("_weeks", "")
     }
 
     val parentProj = getParents()
+
+    println("Discovered project '${getParents()}'")
 
     repositories {
         mavenCentral()
