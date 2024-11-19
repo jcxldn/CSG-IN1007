@@ -34,7 +34,15 @@ configure(subprojects.filter { projectRegex.containsMatchIn(it.name) }) {
     println("Discovered project '${getParents()}'")
 
     repositories {
-        mavenCentral()
+	    mavenCentral()
+    }
+
+    dependencies {
+	    compileOnly("org.projectlombok:lombok:1.18.34")
+	    annotationProcessor("org.projectlombok:lombok:1.18.34")
+    
+	    testCompileOnly("org.projectlombok:lombok:1.18.34")
+	    testAnnotationProcessor("org.projectlombok:lombok:1.18.34")
     }
     
 
