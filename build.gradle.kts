@@ -5,7 +5,7 @@ plugins {
 
 
 // only configure projects with ex[0-9+] or lecture in the name
-var projectRegex = Regex("ex\\d+|lecture")
+var projectRegex = Regex("ex\\d+|lecture|coursework")
 configure(subprojects.filter { projectRegex.containsMatchIn(it.name) }) {
     apply(plugin = "application")
     apply(plugin = "java")
